@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <button id="btn">Click</button>
+    <div id="testDiv">
+        <!-- Bulb -->
+        <input type="checkbox" id="Bulb" name="theme" value="Bulb" >
+        <label for="Bulb">Bulb</label>
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            const websocket = new WebSocket('ws://localhost:8081',
+            );
+            websocket.onopen = function (event) {
+                console.log('Connected to WebSocket server.');
+            };
+            $("#btn").click(function () {
+                console.log("clicked");
+                // get Status of Bulb
+                var Bulb = $("#Bulb").prop("checked");
+                console.log(Bulb);
+                websocket.send(JSON.stringify({
+                    type: 'Bulb',
+                    data: Bulb,
+                    token:"123456789"
+                }));
+            });
+            websocket.onmessage = function (event) {
+                console.log('Message received from server: ' + event.data);
+                var data = JSON.parse(event.data);
+                console.log(data);
+                if (data.type == "Bulb") {
+                    $("#Bulb").prop("checked", data.data);
+                }
+            };
+        })
+    </script>
+</body>
+
+</html>
