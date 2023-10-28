@@ -21,7 +21,7 @@
     </div>
     <script>
         $(document).ready(function () {
-            const websocket = new WebSocket('ws://localhost:8081',
+            const websocket = new WebSocket('ws://localhost:8081','123456789'
             );
             websocket.onopen = function (event) {
                 console.log('Connected to WebSocket server.');
