@@ -15,13 +15,13 @@
     <button id="btn">Click</button>
     <div id="testDiv">
         <!-- Bulb -->
-        <input type="checkbox" id="Bulb" name="theme" value="Bulb" >
+        <input type="checkbox" id="Bulb" name="theme" value="Bulb">
         <label for="Bulb">Bulb</label>
 
     </div>
     <script>
         $(document).ready(function () {
-            const websocket = new WebSocket('ws://localhost:8081','123456789'
+            const websocket = new WebSocket('ws://localhost:8085', '123456789'
             );
             websocket.onopen = function (event) {
                 console.log('Connected to WebSocket server.');
@@ -34,7 +34,7 @@
                 websocket.send(JSON.stringify({
                     type: 'Bulb',
                     data: Bulb,
-                    token:"123456789"
+                    token: "123456789"
                 }));
             });
             websocket.onmessage = function (event) {
